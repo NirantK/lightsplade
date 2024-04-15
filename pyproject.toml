@@ -10,6 +10,14 @@ python = ">3.9,<=3.13"
 tokenizers = "^0.15.2"
 tantivy = "^0.21.0"
 spacy = "^3.7.4"
+modal = "^0.62.63"
+neural-cherche = "^1.1.0"
+transformers = "^4.39.3"
+datasets = "^2.18.0"
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+ruff = "^0.3.7"
 
 [build-system]
 requires = ["poetry-core"]
