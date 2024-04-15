@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "lightsplade"
+version = "0.1.0"
+description = ""
+authors = ["Nirant Kasliwal <nirant.bits@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">3.9,<=3.13"
+tokenizers = "^0.15.2"
+tantivy = "^0.21.0"
+spacy = "^3.7.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
