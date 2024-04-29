@@ -1,6 +1,5 @@
-data/
-msmarco/
-nfcorpus/
-nomic-triplets/
-msmarco.zip
-nfcorpus.zip
+data/*
+nbs/models*/*
+nbs/.locks/*
+__pycache__/*
+.DS_Store
