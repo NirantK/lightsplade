@@ -3,3 +3,4 @@ nbs/models*/*
 nbs/.locks/*
 __pycache__/*
 .DS_Store
+.env
