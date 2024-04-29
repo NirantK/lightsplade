@@ -1,13 +1,11 @@
-import time
 import nltk
 from nltk import SnowballStemmer
 from nltk.corpus import stopwords
 from nltk.tokenize import WordPunctTokenizer
 
-from typing import Any, Dict, Iterable, List, Tuple
+from typing import Any, Iterable, List, Tuple
 import string
 
-from inference import merge
 
 
 try:

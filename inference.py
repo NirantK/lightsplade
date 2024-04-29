@@ -1,9 +1,7 @@
-import math
 from typing import Iterable, List
 import json
 import torch
 import os
-import numpy as np
 from sentence_transformers.models.Transformer import Transformer
 from sentence_transformers import SentenceTransformer
 

@@ -2,7 +2,7 @@ import os
 import json
 from tqdm import tqdm
 import tantivy
-from typing import Iterable, List
+from typing import Iterable
 import shutil
 
 

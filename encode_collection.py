@@ -1,4 +1,3 @@
-from inference import SparseModel
 from semantic_text_splitter import CharacterTextSplitter
 from tqdm import tqdm
 import json

@@ -1,7 +1,6 @@
 from qdrant_client import QdrantClient, models
 import os
 import json
-import math
 
 from remap_tokens import filter_list_tokens, snowball_tokenize, stem_list_tokens
 from upload_sparse import token_to_idx
