@@ -30,15 +30,15 @@ def read_raw_encoded_file(file_name: str) -> Iterable[dict]:
 
 
 def rescore_vector(vector: dict) -> dict:
-
     sorted_vector = sorted(vector.items(), key=lambda x: x[1], reverse=True)
 
     new_vector = {}
 
     for num, (token, value) in enumerate(sorted_vector):
-        new_vector[token] = math.log(4. / (num + 1.) + 1.) # value
+        new_vector[token] = math.log(4.0 / (num + 1.0) + 1.0)  # value
 
     return new_vector
+
 
 def main():
     corpus_file_name = f"data/{DATASET}/corpus.jsonl"  # MS MARCO collection
@@ -52,11 +52,15 @@ def main():
     num_docs = 0
 
     with open(file_out, "w") as out_file:
-        for (raw_vectors, (idx, text)) in tqdm(zip(read_raw_encoded_file(raw_vectors_file_name), read_corpus_file(corpus_file_name))):
-
+        for raw_vectors, (idx, text) in tqdm(
+            zip(
+                read_raw_encoded_file(raw_vectors_file_name),
+                read_corpus_file(corpus_file_name),
+            )
+        ):
             # print(doc_id)
             # print(text)
-            
+
             # print()
             # print(snowball_tokens)
             # print()
@@ -69,10 +73,9 @@ def main():
             total_tokens = 0
 
             for sentence in raw_vectors:
-
                 # print("tokens:\t", sentence['tokens'])
 
-                reconstructed = reconstruct_bpe(enumerate(sentence['tokens']))
+                reconstructed = reconstruct_bpe(enumerate(sentence["tokens"]))
 
                 # print("reconstructed:\t", reconstructed)
 
@@ -84,20 +87,24 @@ def main():
 
                 # print("stemmed:\t", stemmed_reconstructed)
 
-                weighed_reconstructed = aggregate_weights(stemmed_reconstructed, sentence['weights'])
-                
+                weighed_reconstructed = aggregate_weights(
+                    stemmed_reconstructed, sentence["weights"]
+                )
+
                 # print("weighed:\t", weighed_reconstructed)
 
                 total_tokens += len(weighed_reconstructed)
 
-
                 for reconstructed_token, score in weighed_reconstructed:
-                    max_token_weight[reconstructed_token] = max(max_token_weight.get(reconstructed_token, 0), score)
-                    num_tokens[reconstructed_token] = num_tokens.get(reconstructed_token, 0) + 1
+                    max_token_weight[reconstructed_token] = max(
+                        max_token_weight.get(reconstructed_token, 0), score
+                    )
+                    num_tokens[reconstructed_token] = (
+                        num_tokens.get(reconstructed_token, 0) + 1
+                    )
 
                 # print()
 
-            
             # tokens = stem_list_tokens(filter_list_tokens(snowball_tokenize(text)))
             # total_tokens = len(tokens)
             # num_tokens = Counter(tokens)
@@ -116,8 +123,9 @@ def main():
 
             total_tokens_overall += total_tokens
             num_docs += 1
-    
+
     print("Average tokens per document:", total_tokens_overall / num_docs)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

@@ -15,14 +15,11 @@ def conver_sparse_vector(sparse_vector: dict) -> models.SparseVector:
     indices = []
     values = []
 
-    for (idx, value) in sparse_vector.items():
+    for idx, value in sparse_vector.items():
         indices.append(token_to_idx(idx))
         values.append(value)
 
-    return models.SparseVector(
-        indices=indices,
-        values=values
-    )
+    return models.SparseVector(indices=indices, values=values)
 
 
 def load_queries():
@@ -31,15 +28,15 @@ def load_queries():
     with open(f"data/{DATASET}/queries.jsonl", "r") as file:
         for line in file:
             row = json.loads(line)
-            queries[row["_id"]] = { **row, "doc_ids": [] }
-    
+            queries[row["_id"]] = {**row, "doc_ids": []}
+
     with open(f"data/{DATASET}/qrels/test.tsv", "r") as file:
         next(file)
         for line in file:
             query_id, doc_id, score = line.strip().split("\t")
             if int(score) > 0:
                 queries[query_id]["doc_ids"].append(doc_id)
-    
+
     queries_filtered = {}
     for query_id, query in queries.items():
         if len(query["doc_ids"]) > 0:
@@ -60,22 +57,22 @@ def main():
 
     client = QdrantClient(QDRANT_URL, api_key=QDRANT_API_KEY)
 
-
     def search_sparse(query, limit):
-        sparse_vector = dict(map(
-            lambda x: (x, 1),
-            stem_list_tokens(filter_list_tokens(snowball_tokenize(query)))
-        ))
+        sparse_vector = dict(
+            map(
+                lambda x: (x, 1),
+                stem_list_tokens(filter_list_tokens(snowball_tokenize(query))),
+            )
+        )
 
         sparse_vector = conver_sparse_vector(sparse_vector)
         result = client.search(
             collection_name=DATASET,
             query_vector=models.NamedSparseVector(
-                name="attention",
-                vector=sparse_vector
+                name="attention", vector=sparse_vector
             ),
             with_payload=True,
-            limit=limit
+            limit=limit,
         )
 
         return result

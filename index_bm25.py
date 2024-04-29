@@ -8,6 +8,7 @@ import shutil
 
 DATASET = os.getenv("DATASET", "quora")
 
+
 def read_file(file_name: str) -> Iterable[str]:
     with open(file_name, "r") as file:
         for line in file:
@@ -16,15 +17,12 @@ def read_file(file_name: str) -> Iterable[str]:
 
 
 def main():
-
-    file_name = f"data/{DATASET}/corpus.jsonl" # MS MARCO collection
-    file_out = f"data/{DATASET}/bm25.tantivy" # output file
-    
+    file_name = f"data/{DATASET}/corpus.jsonl"  # MS MARCO collection
+    file_out = f"data/{DATASET}/bm25.tantivy"  # output file
 
     if os.path.exists(file_out):
         # remove direcotry recursively
         shutil.rmtree(file_out)
-
 
     if not os.path.exists(file_out):
         os.makedirs(file_out, exist_ok=True)
@@ -41,15 +39,13 @@ def main():
     writer = index.writer()
 
     for idx, (doc_id, doc_text) in tqdm(enumerate(read_file(file_name))):
-        doc = tantivy.Document(
-            doc_id=doc_id,
-            body=doc_text
-        )
+        doc = tantivy.Document(doc_id=doc_id, body=doc_text)
         writer.add_document(doc)
         if idx % 1000 == 0:
             writer.commit()
 
     writer.commit()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
