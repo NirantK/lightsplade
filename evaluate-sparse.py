@@ -1,6 +1,7 @@
-from qdrant_client import QdrantClient, models
-import os
 import json
+import os
+
+from qdrant_client import QdrantClient, models
 
 from remap_tokens import filter_list_tokens, snowball_tokenize, stem_list_tokens
 from upload_sparse import token_to_idx
@@ -11,7 +12,7 @@ QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY", None)
 
 
-def conver_sparse_vector(sparse_vector: dict) -> models.SparseVector:
+def convert_sparse_vector(sparse_vector: dict) -> models.SparseVector:
     indices = []
     values = []
 
@@ -65,7 +66,7 @@ def main():
             )
         )
 
-        sparse_vector = conver_sparse_vector(sparse_vector)
+        sparse_vector = convert_sparse_vector(sparse_vector)
         result = client.search(
             collection_name=DATASET,
             query_vector=models.NamedSparseVector(
