@@ -12,10 +12,11 @@ spacy = "^3.7.4"
 modal = "^0.62.63"
 datasets = "^2.18.0"
 nltk = "^3.8.1"
+evaluate = "^0.4.1"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"
-ruff = "^0.3.7"
+ruff = ">=0.3.7"
 
 [build-system]
 requires = ["poetry-core"]
