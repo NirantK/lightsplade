@@ -53,7 +53,7 @@ def read_corpus_jsonl(file_path) -> Iterable[dict]:
             yield row
 
 
-def conver_sparse_vector(sparse_vector: dict) -> models.SparseVector:
+def convert_sparse_vector(sparse_vector: dict) -> models.SparseVector:
     indices = []
     values = []
 
@@ -79,7 +79,7 @@ def read_data() -> Iterable[models.PointStruct]:
         yield models.PointStruct(
             id=n,
             vector={
-                "attention": conver_sparse_vector(
+                "attention": convert_sparse_vector(
                     rescore_vector(sparse_vector, idf, number_of_document)
                 )
             },
