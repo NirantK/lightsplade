@@ -13,6 +13,7 @@ modal = "^0.62.63"
 datasets = "^2.18.0"
 nltk = "^3.8.1"
 evaluate = "^0.4.1"
+trectools = "^0.0.49"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"
