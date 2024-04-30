@@ -1,3 +1,4 @@
+import math
 import string
 from typing import Any, Iterable, List, Tuple
 
@@ -111,6 +112,15 @@ AVG_DOC_SIZE = 100
 k = 1.2
 b = 0.75
 
+def rescore_vector(vector: dict) -> dict:
+    sorted_vector = sorted(vector.items(), key=lambda x: x[1], reverse=True)
+
+    new_vector = {}
+
+    for num, (token, value) in enumerate(sorted_vector):
+        new_vector[token] = math.log(4.0 / (num + 1.0) + 1.0)  # value
+
+    return new_vector
 
 def calc_tf(tf, doc_size):
     return (k + 1) * tf / (k * (1 - b + b * doc_size / AVG_DOC_SIZE) + tf)
