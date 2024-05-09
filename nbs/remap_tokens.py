@@ -104,7 +104,7 @@ def aggregate_weights(
         try:
             sum_weight = sum(weights[idx] for idx in idxs)
         except IndexError:
-            print("IndexError", idxs, weights)
+            # print("IndexError", idxs, weights)
             sum_weight = 0.0
         result.append((token, sum_weight))
     return result
