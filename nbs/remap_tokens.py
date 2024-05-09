@@ -101,13 +101,16 @@ def aggregate_weights(
 ) -> List[Tuple[str, float]]:
     result = []
     for token, idxs in tokens:
-        sum_weight = sum(weights[idx] for idx in idxs)
+        try:
+            sum_weight = sum(weights[idx] for idx in idxs)
+        except IndexError:
+            print("IndexError", idxs, weights)
+            sum_weight = 0.0
         result.append((token, sum_weight))
     return result
 
 
-AVG_DOC_SIZE = 100
-
+AVG_DOC_SIZE = 200
 
 k = 1.2
 b = 0.75
