@@ -30,6 +30,37 @@ punctuation = set(string.punctuation)
 special_tokens = set(["[CLS]", "[SEP]", "[PAD]", "[MASK]", "[UNK]"])
 
 
+def reconstruct_sentence_piece(
+    bpe_tokens: Iterable[Tuple[int, str]],
+) -> List[Tuple[str, List[int]]]:
+    result = []
+    acc = ""
+    acc_idx = []
+
+    for idx, token in enumerate(bpe_tokens):
+        if token in special_tokens:
+            continue
+
+        if token.startswith("_"):
+            acc += token[1:]
+            acc_idx.append(idx)
+            # print(acc, acc_idx)
+        else:
+            if acc and idx!=1 and not bpe_tokens[idx - 1].startswith("▁"):
+                # Handle case where new word should start but there's no '▁'
+                if acc:
+                    result.append((acc, acc_idx))
+                    acc = ""
+                    acc_idx = []
+            acc = token
+            acc_idx.append(idx)
+
+    if acc:
+        result.append((acc, acc_idx))
+
+    return result
+
+
 def reconstruct_bpe(
     bpe_tokens: Iterable[Tuple[int, str]],
 ) -> List[Tuple[str, List[int]]]:
@@ -115,6 +146,7 @@ AVG_DOC_SIZE = 200
 k = 1.2
 b = 0.75
 
+
 def rescore_vector(vector: dict) -> dict:
     sorted_vector = sorted(vector.items(), key=lambda x: x[1], reverse=True)
 
@@ -124,6 +156,7 @@ def rescore_vector(vector: dict) -> dict:
         new_vector[token] = math.log(4.0 / (num + 1.0) + 1.0)  # value
 
     return new_vector
+
 
 def calc_tf(tf, doc_size):
     return (k + 1) * tf / (k * (1 - b + b * doc_size / AVG_DOC_SIZE) + tf)
