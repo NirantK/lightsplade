@@ -4,3 +4,4 @@ nbs/.locks/*
 .DS_Store
 .env
 **/__pycache__/
+nbs/.ipynb_checkpoints/*
