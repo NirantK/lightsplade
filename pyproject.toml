@@ -22,6 +22,7 @@ loguru = "^0.7.2"
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"
 ruff = ">=0.3.7"
+llm = "^0.14"
 
 [build-system]
 requires = ["poetry-core"]
