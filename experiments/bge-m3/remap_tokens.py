@@ -68,7 +68,7 @@ def reconstruct_bpe(
     acc = ""
     acc_idx = []
 
-    for idx, token in bpe_tokens:
+    for idx, token in enumerate(bpe_tokens):
         if token in special_tokens:
             continue
 
