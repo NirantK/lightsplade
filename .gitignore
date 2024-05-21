@@ -1,3 +1,4 @@
+poetry.lock
 data/*
 nbs/models*/*
 nbs/.locks/*
